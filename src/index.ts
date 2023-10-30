@@ -17,7 +17,19 @@ const user = new Elysia().group("/user", (app) =>
 const products = new Elysia().group("/products", (app) =>
   app
     .post("/", () => "Create Product")
-    .get("/:id", () => "Get Product by ID")
+    .get(
+      "/:id",
+      ({ params: { id } }) => {
+        return {
+          id,
+        };
+      },
+      {
+        params: t.Object({
+          id: t.Numeric(),
+        }),
+      }
+    )
     .put("/:id", () => "Update Product by ID")
     .delete("/:id", () => "Delete Product by iD")
 );
