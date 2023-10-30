@@ -1,4 +1,5 @@
 import { Elysia } from "elysia";
+import { plugin } from "./plugin";
 
 const app = new Elysia()
   .state({
@@ -7,6 +8,7 @@ const app = new Elysia()
     email: "jane@gmail.com",
   })
   .decorate("getDate", () => Date.now())
+  .use(plugin)
   .get("/", () => "Hello Bun Dev, I am gonna build RESTFUL APIs")
   .get("/post/:id", ({ params: { id } }) => {
     // return `Hello ID: ${id}`;
@@ -25,6 +27,8 @@ const app = new Elysia()
   })
   .get("/tracks", ({ store, getDate }) => {
     console.log({ store, date: getDate() });
+
+    console.log({ "plugin-version": store["plugin-version"] });
 
     return new Response(
       JSON.stringify({
