@@ -1,11 +1,18 @@
-import { Elysia } from "elysia";
+import { Elysia, t } from "elysia";
 
 const app = new Elysia();
 
 const user = new Elysia().group("/user", (app) =>
   app
-    .post("/sign-in", ({ body }) => {
-      return body;
+    .post("/sign-in", ({ body }) => body, {
+      body: t.Object({
+        username: t.String(),
+        password: t.String(),
+      }),
+      response: t.Object({
+        username: t.String(),
+        password: t.String(),
+      }),
     })
     .post("/sign-up", () => "Signup route")
     .post("/profile", () => "Profile ROuter")
